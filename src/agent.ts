@@ -24,6 +24,7 @@ export async function createAgent() {
     agent,
     tools,
     verbose: true,
+    maxIterations: 15, // 限制最大迭代次数，避免无限循环
   });
 
   return executor;

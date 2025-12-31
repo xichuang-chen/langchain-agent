@@ -18,8 +18,18 @@ async function main() {
       process.exit(0);
     }
 
-    const result = await agent.run(input);
-    console.log("Agent:", result);
+    // 过滤空输入
+    if (!input.trim()) {
+      console.log("请输入有效的问题");
+      return;
+    }
+
+    try {
+      const result = await agent.invoke({ input: input.trim() });
+      console.log("Agent:", result.output);
+    } catch (error) {
+      console.error("Agent 执行出错:", error);
+    }
   });
 }
 
