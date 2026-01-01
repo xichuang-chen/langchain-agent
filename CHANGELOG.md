@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com-personal/xichuang-chen/langchain-agent/compare/v1.0.3...v1.1.0) (2026-01-01)
+
+
+### Features
+
+* support voice output ([c6d1585](https://github.com-personal/xichuang-chen/langchain-agent/commit/c6d1585751c67141d0ad21e217db5fdc03bb76bd))
+
 ### [1.0.3](https://github.com-personal/xichuang-chen/langchain-agent/compare/v1.0.2...v1.0.3) (2026-01-01)
 
 ### [1.0.2](https://github.com-personal/xichuang-chen/langchain-agent/compare/v1.0.1...v1.0.2) (2026-01-01)
