@@ -15,6 +15,14 @@ function truncateByChars(text: string, maxChars: number) {
   return text.slice(0, maxChars) + "\n...(truncated)";
 }
 
+function isRealtimeQuery(input: string) {
+  // 实时信息不应依赖长期记忆（容易过期且会“背答案”绕过工具）
+  // 这里用关键词做保守过滤：时间/天气/空气质量
+  return /空气质量|aqi|pm2\.?5|pm10|天气|气温|温度|降水|下雨|风速|几点|时间|现在几点|今天几号|日期/i.test(
+    input
+  );
+}
+
 /**
  * 修复 VectorStoreRetrieverMemory 默认 saveContext 会把整个 inputValues 全量写入向量库的问题：
  * CombinedMemory/AgentExecutor 会把 chat_history 等 memory 变量塞进 inputValues，
@@ -49,6 +57,9 @@ class SafeVectorStoreRetrieverMemory extends VectorStoreRetrieverMemory {
     const input = String(getInputValue(inputValues, this.inputKey) ?? "").trim();
     const output = String(getOutputValue(outputValues, this.outputKey ?? "output") ?? "").trim();
 
+    // 跳过“实时类问题”的长期记忆写入，避免后续召回时用过期答案覆盖工具调用
+    if (isRealtimeQuery(input)) return;
+
     const raw = `input: ${input}\noutput: ${output}`.trim();
     const pageContent = truncateByChars(raw, this.saveMaxChars);
     if (!pageContent) return;
@@ -62,6 +73,11 @@ class SafeVectorStoreRetrieverMemory extends VectorStoreRetrieverMemory {
   }
 
   override async loadMemoryVariables(values: InputValues) {
+    const input = String(getInputValue(values, this.inputKey) ?? "").trim();
+    // 实时类问题：不注入长期记忆，强制模型走工具
+    if (isRealtimeQuery(input)) {
+      return { [this.memoryKey]: "" };
+    }
     const vars = await super.loadMemoryVariables(values);
     const v = vars[this.memoryKey];
     if (typeof v === "string") {

@@ -25,6 +25,10 @@ export OPENAI_API_KEY="..."
 export OPENAI_CHAT_MODEL="gpt-5-chat"
 # 可选：触发 Azure/LiteLLM 内容策略时自动降级重试一次
 export OPENAI_FALLBACK_CHAT_MODEL="gpt-5-mini-2025-08-07"
+
+# （可选）日历：指向你的 .ics 文件（本地日历导出文件）
+# 例如：export CALENDAR_ICS_PATH="/Users/you/Downloads/calendar.ics"
+export CALENDAR_ICS_PATH="..."
 ```
 
 启动 Agent（输入 `exit` 退出）：
@@ -32,6 +36,32 @@ export OPENAI_FALLBACK_CHAT_MODEL="gpt-5-mini-2025-08-07"
 ```bash
 npm run dev
 ```
+
+## 内置能力（Tools）
+
+你可以直接用自然语言提问，Agent 会在需要时自动调用工具：
+
+- **默认地点/时区**
+  - 未明确说明地点/时区时：时间/天气/空气质量默认按 **西安市（北京时间/Asia/Shanghai）**
+  - 若你明确给出其他城市/经纬度/时区，则以你提供的为准
+
+- **查时间**
+  - “现在几点了？”
+  - “现在纽约时间是多少？”（更推荐：直接说时区，例如 “Asia/Shanghai”）
+
+- **查天气（需要联网，使用 Open-Meteo）**
+  - “北京今天什么天气？”
+  - “上海现在多少度？”
+  - 会附带空气质量：AQI(US)、PM2.5、PM10
+
+- **查空气质量（需要联网，使用 Open-Meteo）**
+  - “北京空气质量怎么样？”
+  - “上海 AQI 是多少？”
+  - 指标只返回 AQI 数值，但会附带“优/良/是否建议戴口罩”等简短建议总结
+
+- **查日历（读取本地 .ics）**
+  - 先设置 `CALENDAR_ICS_PATH`
+  - 然后问：“我今天有什么日程？”、“明天有哪些会议？”
 
 ## 发版（standard-version）
 
