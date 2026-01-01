@@ -135,3 +135,5 @@ BREAKING CHANGE: memory key "long_memory" renamed to "memory"
 - [v1.0.0](./doc/v1.0.0.md)
 - [v1.0.1](./doc/v1.0.1.md)
 - [v1.0.2](./doc/v1.0.2.md)
+- [v1.0.3](./doc/v1.0.3.md)
+- [v1.1.0](./doc/v1.0.0.md)
