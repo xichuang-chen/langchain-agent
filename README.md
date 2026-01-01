@@ -29,6 +29,12 @@ export OPENAI_FALLBACK_CHAT_MODEL="gpt-5-mini-2025-08-07"
 # （可选）日历：指向你的 .ics 文件（本地日历导出文件）
 # 例如：export CALENDAR_ICS_PATH="/Users/you/Downloads/calendar.ics"
 export CALENDAR_ICS_PATH="..."
+
+# （可选）语音输出（方案一 / macOS）：默认开启；如需关闭：
+export TTS_ENABLED="0"
+# （可选）选择音色/语速（macOS say）
+# export TTS_VOICE="Tingting"
+# export TTS_RATE="200"
 ```
 
 启动 Agent（输入 `exit` 退出）：
